@@ -1,5 +1,8 @@
 Revision history for Perl extension CPAN::YACSmoke::Plugin::Outlook.
 
+0.05    29/03/2005
+        - Added better checking for Outlook in typelib list
+
 0.04    27/03/2005
         - Added DSLIP information
         - Added POD coverage test script

@@ -2,7 +2,7 @@ package CPAN::YACSmoke::Plugin::Outlook;
 
 use strict;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 # -------------------------------------
 
@@ -212,8 +212,8 @@ For additional information, see the documentation for these modules:
 
 =head1 AUTHOR
 
-  Barbie, <barbie@cpan.org>
-  for Miss Barbell Productions <http://www.missbarbell.co.uk>.
+Barbie, <barbie@cpan.org>
+for Miss Barbell Productions L<http://www.missbarbell.co.uk>.
 
 =head1 COPYRIGHT AND LICENSE
 

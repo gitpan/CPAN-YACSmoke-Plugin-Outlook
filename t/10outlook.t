@@ -1,10 +1,15 @@
 use Test::More tests => 2;
 
+use lib 't/testlib';
+
 my $mailbox = $ENV{SMOKE_MAILBOX} || 'CPAN Testers';
  
 SKIP: {
-	eval "use Win32::OLE::Const 'Microsoft Outlook'";
-	skip "Microsoft Outlook doesn't appear to be installed", 2	if($@);
+	eval "use Typelibs";
+	skip "Microsoft Outlook doesn't appear to be installed\n", 2	if($@);
+
+	my $vers = Typelibs::ExistsTypeLib('Microsoft Outlook');
+	skip "Microsoft Outlook doesn't appear to be installed\n", 2	unless($vers);
 
 	eval "use CPAN::YACSmoke::Plugin::Outlook";
 	skip "Unable to establish a connection with Outlook", 2	if($@);
