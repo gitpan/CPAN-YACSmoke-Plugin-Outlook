@@ -1,0 +1,16 @@
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         CPAN-YACSmoke-Plugin-Outlook
+version:      0.02
+version_from: lib/CPAN/YACSmoke/Plugin/Outlook.pm
+installdirs:  site
+requires:
+    Carp:                          0
+    CPAN::YACSmoke:                0.02_03
+    File::Basename:                0
+    Test::More:                    0
+    Win32::OLE:                    0
+    Win32::OLE::Const:             0
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.23
