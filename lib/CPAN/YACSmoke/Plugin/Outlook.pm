@@ -1,7 +1,8 @@
 package CPAN::YACSmoke::Plugin::Outlook;
+
 use strict;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 # -------------------------------------
 
@@ -200,6 +201,14 @@ For additional information, see the documentation for these modules:
   Win32::OLE
   Win32::OLE::Const 'Microsoft Outlook'
   File::Basename
+
+=head1 DSLIP
+
+  b - Beta testing
+  d - Developer
+  p - Perl-only
+  O - Object oriented
+  p - Standard-Perl: user may choose between GPL and Artistic
 
 =head1 AUTHOR
 

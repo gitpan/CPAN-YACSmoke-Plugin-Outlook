@@ -7,3 +7,4 @@ lib/CPAN/YACSmoke/Plugin/Outlook.pm
 t/00basics.t
 t/10outlook.t
 t/90podtest.t
+t/91podcover.t
