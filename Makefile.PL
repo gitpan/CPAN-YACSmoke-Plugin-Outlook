@@ -11,6 +11,7 @@ WriteMakefile
 				'File::Basename'        => 0,
 				'Carp'                  => 0,
     },
-    'INSTALLDIRS' => 'site',
-    'PL_FILES' => {}
+    ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
+      (ABSTRACT	=> 'Outlook mailbox list for CPAN::YACSmoke',
+       AUTHOR	=> 'Barbie <barbie@cpan.org>') : ()),
 );

@@ -1,12 +1,19 @@
+package CPAN::YACSmoke::Plugin::Outlook;
+use strict;
+
+our $VERSION = '0.03';
+
+# -------------------------------------
+
 =head1 NAME
 
-CPAN::YACSmoke::Plugin::Outlook - Outlook mailbox list for Yet Another CPAN Smoke Tester
+CPAN::YACSmoke::Plugin::Outlook - Outlook mailbox list for CPAN::YACSmoke
 
 =head1 SYNOPSIS
 
   use CPAN::YACSmoke;
   my $config = {
-	  list_from => 'Outlook', 
+      list_from => 'Outlook', 
       mailbox => 'CPAN Testers' # no default, must be set.
   };
   my $foo = CPAN::YACSmoke->new(config => $config);
@@ -21,11 +28,6 @@ PAUSE posts, and generates a list of modules, which require testing.
 This module should be use together with CPAN::YACSmoke.
 
 =cut
-
-package CPAN::YACSmoke::Plugin::Outlook;
-use strict;
-
-our $VERSION = '0.02';
 
 # -------------------------------------
 # Library Modules
@@ -81,15 +83,15 @@ sub download_list {
     return _getTestList($folder);
 }
 
-=item _getFolder()
-
-Read the mail folder within Outlook and return an object
-reference to it.
-
-=cut
-
-# The following subroutine may be rewritten in the future to use the
+#=item _getFolder()
+#
+# Read the mail folder within Outlook and return an object
+# reference to it.
+#
+# The function may be rewritten in the future to use the
 # Mail::Outlook module. For now it is enough to wrap it here.
+#
+#=cut
 
 sub _getFolder{
     my $mailbox = shift;
@@ -110,11 +112,11 @@ sub _getFolder{
     return $folder;
 }
 
-=item _getTestList()
-
-Read the messages within $folder and create a list of distributions to test.
-
-=cut
+#=item _getTestList()
+#
+# Read the messages within $folder and create a list of distributions to test.
+#
+#=cut
 
 sub _getTestList {
     my $folder = shift;
@@ -157,8 +159,6 @@ sub _getTestList {
 1;
 __END__
 
-=pod
-
 =back
 
 =head1 CAVEATS
@@ -175,10 +175,16 @@ severely buggy.  Do not run this on a critical machine.
 This module uses the backend of CPANPLUS to do most of the work, so is
 subject to any bugs of CPANPLUS.
 
-=head2 Suggestions and Bug Reporting
+=head1 BUGS, PATCHES & FIXES
 
-Please submit suggestions and report bugs to the CPAN Bug Tracker at
-L<http://rt.cpan.org>.
+There are no known bugs at the time of this release. However, if you spot a
+bug or are experiencing difficulties, that is not explained within the POD
+documentation, please send an email to barbie@cpan.org or submit a bug to the
+RT system (http://rt.cpan.org/). However, it would help greatly if you are 
+able to pinpoint problems or even supply a patch. 
+
+Fixes are dependant upon their severity and my availablity. Should a fix not
+be forthcoming, please feel free to (politely) remind me.
 
 =head1 SEE ALSO
 
@@ -197,14 +203,12 @@ For additional information, see the documentation for these modules:
 
 =head1 AUTHOR
 
-Barbie, C< <<barbie@cpan.org>> >
-for Miss Barbell Productions, L<http://www.missbarbell.co.uk>
-
-Birmingham Perl Mongers, L<http://birmingham.pm.org/>
+  Barbie, <barbie@cpan.org>
+  for Miss Barbell Productions <http://www.missbarbell.co.uk>.
 
 =head1 COPYRIGHT AND LICENSE
 
-  Copyright (C) 2003-5 Barbie for Miss Barbell Productions
+  Copyright (C) 2005 Barbie for Miss Barbell Productions.
   All Rights Reserved.
 
   This module is free software; you can redistribute it and/or 
