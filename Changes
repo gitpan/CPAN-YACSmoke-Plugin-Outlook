@@ -1,5 +1,14 @@
 Revision history for Perl extension CPAN::YACSmoke::Plugin::Outlook.
 
+0.06	12/03/2007
+	- Handwritten META.yml to conform to current specs.
+	- Changed all instances of LICENCE to LICENSE.
+	- Added META.yml test script.
+	- Added LICENSE file.
+	- Renamed the contrib directory to examples.
+	- POD/README updates.
+	- Devel::Cover = 82.8%
+
 0.05    29/03/2005
         - Added better checking for Outlook in typelib list
 

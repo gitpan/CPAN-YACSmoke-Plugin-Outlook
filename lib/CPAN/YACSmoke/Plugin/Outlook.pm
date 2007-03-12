@@ -2,7 +2,7 @@ package CPAN::YACSmoke::Plugin::Outlook;
 
 use strict;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 # -------------------------------------
 
@@ -54,7 +54,7 @@ Creates the plugin object.
 =cut
     
 sub new {
-    my $class = shift || __PACKAGE__;
+    my $class = shift;
     my $hash  = shift;
 
     my $self = {};
@@ -96,19 +96,19 @@ sub download_list {
 
 sub _getFolder{
     my $mailbox = shift;
-    my $outlook;
+    my ($outlook,$folder);
 
-    eval {
-        $outlook = Win32::OLE->GetActiveObject('Outlook.Application')
-    };
+    eval { $outlook = Win32::OLE->GetActiveObject('Outlook.Application') };
     if ($@ || !defined($outlook)) {
-        $outlook = Win32::OLE->new('Outlook.Application', sub {$_[0]->Quit;})
-            or return undef;
+        eval { $outlook = Win32::OLE->new('Outlook.Application', sub {$_[0]->Quit;}) };
+        return  if ($@ || !defined($outlook));
     }
 
-    my $namespace = $outlook->GetNameSpace("MAPI")          or return undef;
-    my $inbox = $namespace->GetDefaultFolder(olFolderInbox) or return undef;
-    my $folder = $inbox->Folders($mailbox)                  or return undef;
+    my $namespace = $outlook->GetNameSpace("MAPI")              or return;
+    my $inbox     = $namespace->GetDefaultFolder(olFolderInbox) or return;
+
+    eval { $folder = $inbox->Folders($mailbox) };
+    return  if($@);
 
     return $folder;
 }
@@ -136,21 +136,22 @@ sub _getTestList {
             # compressed, otherwise it is likely to be an adhoc distribution.
             # Plus CPANPLUS uses this regex anyway.
 
-            my ($extn) = ($file =~ /(\.tar(?:\.(?:gz|Z|bz2))?|\.t[gb]z|\.zip)$/i);
-            my ($dist,$version) = ($file =~ m!
-                ^                       # start of string
-                (.*?)                   # distribution name
-                [\-_]                   # name/version separator
-                (\d                     # a major version number
-                    (?: [\._]           # major/minor version separator
-                        \d              # minor version number
-                        (?:[\-\._\w]+)? # development release id
-                    )?
-                )
-                $extn                   # file extension
-                                !x)     if($extn);
-            # Did we manage to parse it?
-            push @testlist, $path   if($dist && $extn);
+            if(my ($extn) = ($file =~ /(\.tar(?:\.(?:gz|Z|bz2))?|\.t[gb]z|\.zip)$/i)) {
+                my ($dist,$version) = ($file =~ m!
+                    ^                       # start of string
+                    (.*?)                   # distribution name
+                    [\-_]                   # name/version separator
+                    (\d                     # a major version number
+                        (?: [\._]           # major/minor version separator
+                            \d              # minor version number
+                            (?:[\-\._\w]+)? # development release id
+                        )?
+                    )
+                    $extn                   # file extension
+                                    !x);
+                # Did we manage to parse it?
+                push @testlist, $path   if($dist);
+            }
         }
     } while ($item = $items->GetPrevious());
 
@@ -176,16 +177,19 @@ severely buggy.  Do not run this on a critical machine.
 This module uses the backend of CPANPLUS to do most of the work, so is
 subject to any bugs of CPANPLUS.
 
-=head1 BUGS, PATCHES & FIXES
+=head1 SUPPORT
 
 There are no known bugs at the time of this release. However, if you spot a
-bug or are experiencing difficulties, that is not explained within the POD
-documentation, please send an email to barbie@cpan.org or submit a bug to the
-RT system (http://rt.cpan.org/). However, it would help greatly if you are 
-able to pinpoint problems or even supply a patch. 
+bug or are experiencing difficulties that are not explained within the POD
+documentation, please submit a bug to the RT system (see link below). However,
+it would help greatly if you are able to pinpoint problems or even supply a 
+patch. 
 
 Fixes are dependant upon their severity and my availablity. Should a fix not
-be forthcoming, please feel free to (politely) remind me.
+be forthcoming, please feel free to (politely) remind me by sending an email
+to barbie@cpan.org .
+
+RT: http://rt.cpan.org/Public/Dist/Display.html?Name=CPAN-YACSmoke-Plugin-Outlook
 
 =head1 SEE ALSO
 
@@ -212,15 +216,18 @@ For additional information, see the documentation for these modules:
 
 =head1 AUTHOR
 
-Barbie, <barbie@cpan.org>
-for Miss Barbell Productions L<http://www.missbarbell.co.uk>.
+Barbie <barbie@cpan.org>
+for Miss Barbell Productions http://www.missbarbell.co.uk.
 
 =head1 COPYRIGHT AND LICENSE
 
-  Copyright (C) 2005 Barbie for Miss Barbell Productions.
-  All Rights Reserved.
+  Copyright (C) 2005-2007 Barbie for Miss Barbell Productions.
 
-  This module is free software; you can redistribute it and/or 
+  This library is free software; you can redistribute it and/or 
   modify it under the same terms as Perl itself.
+
+The full text of the licenses can be found in the Artistic file included with
+this distribution, or in perlartistic file available with your Perl 
+installation.
 
 =cut

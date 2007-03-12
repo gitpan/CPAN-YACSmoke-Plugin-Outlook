@@ -1,4 +1,4 @@
-use Test::More tests => 2;
+use Test::More tests => 6;
 
 use lib 't/testlib';
 
@@ -6,23 +6,32 @@ my $mailbox = $ENV{SMOKE_MAILBOX} || 'CPAN Testers';
  
 SKIP: {
 	eval "use Typelibs";
-	skip "Microsoft Outlook doesn't appear to be installed\n", 2	if($@);
-
+	skip "Microsoft Outlook doesn't appear to be installed\n", 6	if($@);
 	my $vers = Typelibs::ExistsTypeLib('Microsoft Outlook');
-	skip "Microsoft Outlook doesn't appear to be installed\n", 2	unless($vers);
-
+	skip "Microsoft Outlook doesn't appear to be installed\n", 6	unless($vers);
 	eval "use CPAN::YACSmoke::Plugin::Outlook";
-	skip "Unable to establish a connection with Outlook", 2	if($@);
+	skip "Unable to establish a connection with Outlook", 6	        if($@);
 
-	my $plugin;
-	my $self = { mailbox => $mailbox };
+    my @list;
 
-	$plugin = CPAN::YACSmoke::Plugin::Outlook->new($self);
-	skip "Mailbox '$mailbox' doesn't appear to exist", 2	if($@);
-
+    # bad calls
+	my $plugin = CPAN::YACSmoke::Plugin::Outlook->new();
 	isa_ok($plugin,'CPAN::YACSmoke::Plugin::Outlook');
+	eval { @list = $plugin->download_list(); };
+	like($@, qr/Need a Outlook mail folder to proceed/);
 
-	my @list = $plugin->download_list();
+    my $self = { mailbox => 'blah' };
+	$plugin = CPAN::YACSmoke::Plugin::Outlook->new($self);
+	isa_ok($plugin,'CPAN::YACSmoke::Plugin::Outlook');
+	eval { @list = $plugin->download_list(); };
+	like($@, qr/Cannot read 'blah' Folder/);
+
+    # good calls
+    $self = { mailbox => $mailbox };
+	$plugin = CPAN::YACSmoke::Plugin::Outlook->new($self);
+	isa_ok($plugin,'CPAN::YACSmoke::Plugin::Outlook');
+	eval { @list = $plugin->download_list(); };
+    skip "Mailbox '$mailbox' doesn't appear to exist", 1	if($@);
 	ok(@list > 0);
 }
 
