@@ -1,13 +1,20 @@
 Revision history for Perl extension CPAN::YACSmoke::Plugin::Outlook.
 
+0.07	30/11/2010
+        - CPAN::YACSmoke is no longer supported.
+        - The recommend CPANPLUS smoker is now CPANPLUS-Smoker.
+        - The NNTP feed has now been disabled. 
+        - The CPAN Testers mailing list has now been disabled. 
+        - This module will be removed from CPAN in January 2011.
+
 0.06	12/03/2007
-	- Handwritten META.yml to conform to current specs.
-	- Changed all instances of LICENCE to LICENSE.
-	- Added META.yml test script.
-	- Added LICENSE file.
-	- Renamed the contrib directory to examples.
-	- POD/README updates.
-	- Devel::Cover = 82.8%
+        - Handwritten META.yml to conform to current specs.
+        - Changed all instances of LICENCE to LICENSE.
+        - Added META.yml test script.
+        - Added LICENSE file.
+        - Renamed the contrib directory to examples.
+        - POD/README updates.
+        - Devel::Cover = 82.8%
 
 0.05    29/03/2005
         - Added better checking for Outlook in typelib list

@@ -1,15 +1,13 @@
 use Test::More;
+use IO::File;
 
 # Skip if doing a regular install
 plan skip_all => "Author tests not required for installation"
     unless ( $ENV{AUTOMATED_TESTING} );
 
-eval "use Test::CPAN::Meta";
-plan skip_all => "Test::CPAN::Meta required for testing META.yml" if $@;
+my $fh = IO::File->new('Changes','r')   or plan skip_all => "Cannot open Changes file";
 
 plan no_plan;
-
-my $meta = meta_spec_ok(undef,undef,@_);
 
 SKIP: {
 	eval "use Typelibs";
@@ -22,13 +20,14 @@ SKIP: {
 
     my $version = $CPAN::YACSmoke::Plugin::Outlook::VERSION;
 
-    is($meta->{version},$version,
-        'META.yml distribution version matches');
-
-    if($meta->{provides}) {
-        for my $mod (keys %{$meta->{provides}}) {
-            is($meta->{provides}{$mod}{version},$version,
-                "META.yml entry [$mod] version matches");
-        }
+    my $latest = 0;
+    while(<$fh>) {
+        next        unless(m!^\d!);
+        $latest = 1 if(m!^$version!);
+        like($_, qr!\d[\d._]+\s+\d{2}/\d{2}/\d{4}!,'... version has a date');
     }
+
+    is($latest,1,'... latest version not listed');
 }
+
+$fh->close;

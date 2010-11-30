@@ -5,7 +5,6 @@ WriteMakefile
     'VERSION_FROM' => 'lib/CPAN/YACSmoke/Plugin/Outlook.pm',
     'PREREQ_PM' => {
                 'Test::More'            => 0,
-                'CPAN::YACSmoke'        => 0.03,
 				'Win32::OLE'            => 0,
 				'Win32::OLE::Const'     => 0,
 				'File::Basename'        => 0,
