@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                   CPAN-YACSmoke-Plugin-Outlook
-version:                0.07
+version:                0.08
 abstract:               Outlook mailbox list plugin for CPAN-YACSmoke
 author:
   - Barbie <barbie@cpan.org>
@@ -26,7 +26,7 @@ build_requires:
 provides:
   CPAN::YACSmoke::Plugin::Outlook:
     file:     lib/CPAN/YACSmoke/Plugin/Outlook.pm
-    version:  0.07
+    version:  0.08
 no_index:
   directory:
     - t

@@ -1,5 +1,9 @@
 Revision history for Perl extension CPAN::YACSmoke::Plugin::Outlook.
 
+0.08	01/12/2010
+        - fixed pattern matching for private subs from Win32::Const, for
+          Pod::Coverage tests.
+
 0.07	30/11/2010
         - CPAN::YACSmoke is no longer supported.
         - The recommend CPANPLUS smoker is now CPANPLUS-Smoker.
